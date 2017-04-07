@@ -8,8 +8,7 @@ public abstract class User {
 	protected String username;
 	protected String pass;
 	protected Date creationDate;
-	protected Trip[] trips;
-	protected Score[] scores;
+
 
 	public User() {
 		super();
@@ -46,20 +45,5 @@ public abstract class User {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	
-	public Trip[] getTrips() {
-		return trips;
-	}
-	
-	public void setTrips(Trip[] trips) {
-		this.trips = trips;
-	}
-	
-	public Score[] getScores() {
-		return scores;
-	}
-	
-	public void setScores(Score[] scores) {
-		this.scores = scores;
-	}
+
 }

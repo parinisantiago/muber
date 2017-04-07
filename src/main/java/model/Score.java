@@ -5,16 +5,12 @@ public final class Score {
 	private Long id;
 	private String comment;
 	private Integer score;
-	private Passenger passenger;
-	private Trip trip;
 	
-	public Score(Long id, String comment, Integer score, Passenger passenger, Trip trip) {
+	public Score(Long id, String comment, Integer score) {
 		super();
 		this.id = id;
 		this.comment = comment;
 		this.score = score;
-		this.passenger = passenger;
-		this.trip = trip;
 	}
 
 	public Score() {
@@ -43,21 +39,5 @@ public final class Score {
 	
 	public void setScore(Integer score) {
 		this.score = score;
-	}
-	
-	public Passenger getPassenger() {
-		return passenger;
-	}
-	
-	public void setPassenger(Passenger passenger) {
-		this.passenger = passenger;
-	}
-	
-	public Trip getTrip() {
-		return trip;
-	}
-	
-	public void setTrip(Trip trip) {
-		this.trip = trip;
 	}
 }

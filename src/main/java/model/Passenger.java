@@ -5,6 +5,8 @@ import java.sql.Date;
 public class Passenger extends User {
 
 	private Float cash;
+	private Trip[] trips;
+    private Score[] scores;
 
 	public Passenger(Float cash, Long id, String username, String pass, Date creationDate, Trip[] trips, Score[] scores) {
 		this.pass = pass;
@@ -35,5 +37,20 @@ public class Passenger extends User {
 	public void setTrips(Trip[] trips) {
 		this.trips = trips;
 	}
-	
+
+	public Trip[] getTrips() {
+   		return trips;
+    }
+
+    public void setTrips(Trip[] trips) {
+   		this.trips = trips;
+   	}
+
+    public Score[] getScores() {
+   		return scores;
+   	}
+
+    public void setScores(Score[] scores) {
+   		this.scores = scores;
+   	}
 }

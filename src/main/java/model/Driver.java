@@ -10,14 +10,12 @@ public class Driver extends User {
 		super();
 	}
 
-	public Driver(License license, Long id, String username, String pass, Date creationDate, Trip[] trips, Score[] scores) {
+	public Driver(License license, Long id, String username, String pass, Date creationDate) {
 		this.pass = pass;
 		this.id = id;
 		this.username = username;
 		this.creationDate = creationDate;
 		this.license = license;
-		this.trips = trips;
-		this.scores = scores;
 	}
 
 	public License getLicense() {

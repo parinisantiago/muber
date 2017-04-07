@@ -21,7 +21,9 @@
 
 		<!-- Incluir mappings aquí -->
 		<!-- <mapping resource="hibernate/clase.hbm.xml" /> -->
-		<mapping resource="model/License.hbm.xml"/>
+		<mapping resource="model/User.hbm.xml"/>
+		<mapping resource="model/Trip.hbm.xml"/>
+		<mapping resource="model/Score.hbm.xml"/>
 
 	</session-factory>
 </hibernate-configuration>

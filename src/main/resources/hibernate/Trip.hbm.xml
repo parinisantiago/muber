@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="modelo">
+    <class name="Trip">
+        <id name="id" type="long" column="idTrip" unsaved-value="0">
+            <generator class="increment" />
+        </id>
+        <propety name="origin"/>
+        <propety name="destiny"/>
+        <propety name="cost"/>
+        <propety name="maxPassengers"/>
+        <propety name="dateTrip"/>
+        <property name="states" />
+        <many-to-one name="driver" column="idUser" not-null="true" cascade="all"/>
+        <set name="passengers" table="passengers_trips" cascade="all" inverse="true">
+            <key column="idTrip" />
+            <many-to-many column="idUser" class="Passenger" />
+        </set>
+        <set name="scores" cascade="all">
+            <key column="idTrip"/>
+            <one-to-many class="Score"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="modelo">
+    <class name="User">
+        <id name="id" type="long" column="idUser" unsaved-value="0">
+            <generator class="increment" />
+        </id>
+        <discriminator column="userType" type="String"/>
+        <property name="username" />
+        <property name="pass" />
+        <property name="creationDates" />
+        <subclass name="Driver" discriminator-value="D">
+            <component name="license" class="License">
+                <property name="number"/>
+                <property name="expDate"/>
+            </component>
+            <set name="trips" cascade="all">
+                <key column="idUser"/>
+                <one-to-many class="Trip"/>
+            </set>
+        </subclass>
+        <subclass name="Passenger" discriminator-value="P">
+            <property name="cash"/>
+            <set name="trips" table="passengers_trips" cascade="all">
+                    <key column="idUser"/>
+                    <many-to-many column="idTrip" class="Trip"/>
+            </set>
+            <set name="scores" cascade="all">
+                <key column="idUser"/>
+                <one-to-many class="Score"/>
+            </set>
+        </subclass>
+    </class>
+</hibernate-mapping>

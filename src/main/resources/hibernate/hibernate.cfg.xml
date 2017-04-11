@@ -12,8 +12,8 @@
 		</property>
 
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/grupoNN</property>
-		<property name="hibernate.connection.username">grupoNN</property>
-		<property name="hibernate.connection.password">grupoNN</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">root</property>
 		<property name="hibernate.current_session_context_class">thread</property>
 
 		<property name="hibernate.show_sql">true</property>
@@ -21,9 +21,9 @@
 
 		<!-- Incluir mappings aquí -->
 		<!-- <mapping resource="hibernate/clase.hbm.xml" /> -->
-		<mapping resource="model/User.hbm.xml"/>
-		<mapping resource="model/Trip.hbm.xml"/>
-		<mapping resource="model/Score.hbm.xml"/>
+		<mapping resource="hibernate/User.hbm.xml"/>
+		<mapping resource="hibernate/Trip.hbm.xml"/>
+		<mapping resource="hibernate/Score.hbm.xml"/>
 
 	</session-factory>
 </hibernate-configuration>

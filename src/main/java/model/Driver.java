@@ -1,21 +1,12 @@
 package model;
 
-import java.sql.Date;
-
 public class Driver extends User {
 	
+	private Trip[] trips;
 	private License license;
 
 	public Driver() {
 		super();
-	}
-
-	public Driver(License license, Long id, String username, String pass, Date creationDate) {
-		this.pass = pass;
-		this.id = id;
-		this.username = username;
-		this.creationDate = creationDate;
-		this.license = license;
 	}
 
 	public License getLicense() {
@@ -24,6 +15,14 @@ public class Driver extends User {
 
 	public void setLicense(License license) {
 		this.license = license;
+	}
+
+	public Trip[] getTrips() {
+		return trips;
+	}
+
+	public void setTrips(Trip[] trips) {
+		this.trips = trips;
 	}
 	
 }

@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public final class Trip {
 	
-	private Long id;
 	private String origin;
 	private String destiny;
 	private Float cost;
@@ -16,26 +15,6 @@ public final class Trip {
 	
 	public Trip() {
 		super();
-	}
-
-	public Trip(Long id, String origin, String destiny, Float cost, Integer maxPassengers, Date dateTrip, Passenger[] passengers, Score[] score) {
-		super();
-		this.id = id;
-		this.origin = origin;
-		this.destiny = destiny;
-		this.cost = cost;
-		this.maxPassengers = maxPassengers;
-		this.dateTrip = dateTrip;
-		this.passengers = passengers;
-		this.score = score;
-	}
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
 	}
 	
 	public String getOrigin() {

@@ -4,24 +4,14 @@ import java.sql.Date;
 
 public abstract class User {
 
-	protected Long id;
 	protected String username;
 	protected String pass;
 	protected Date creationDate;
-
 
 	public User() {
 		super();
 	}
 
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
 	public String getUsername() {
 		return username;
 	}

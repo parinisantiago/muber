@@ -1,21 +1,27 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class License {
 	
-	private Integer number;
+	public License(int number, Date expDate) {
+		super();
+		this.number = number;
+		this.expDate = expDate;
+	}
+
+	private int number;
 	private Date expDate;
 	
 	public License() {
 		super();
 	}
 	
-	public Integer getNumber() {
+	public int getNumber() {
 		return number;
 	}
 	
-	public void setNumber(Integer number) {
+	public void setNumber(int number) {
 		this.number = number;
 	}
 	

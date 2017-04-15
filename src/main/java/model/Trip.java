@@ -1,21 +1,48 @@
 package model;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Collection;
+import java.util.HashSet;
 
 public final class Trip {
 	
+	private String state;
 	private String origin;
 	private String destiny;
-	private Float cost;
-	private Integer maxPassengers;
+	private Double cost;
+	private int maxPassengers;
 	private Date dateTrip;
-	private Passenger[] passengers;
-	private Score[] score;
-	
+	private Collection<Passenger> passengers;
+	private Collection<Score> scores;
+	private Driver driver;
+	private Long oid;
 	
 	public Trip() {
 		super();
 	}
+	
+	public Trip(String origin, String destiny, Double cost, int maxPassengers, Date dateTrip, Driver driver) {
+		super();
+		this.origin = origin;
+		this.destiny = destiny;
+		this.cost = cost;
+		this.maxPassengers = maxPassengers;
+		this.dateTrip = dateTrip;
+		this.driver = driver;
+		this.passengers = new HashSet<Passenger>();
+		this.scores = new HashSet<Score>();
+		this.state="O";
+	}
+
+	
+	public Long getOid() {
+		return oid;
+	}
+	
+	public void setOid(Long oid) {
+		this.oid = oid;
+	}
+	
 	
 	public String getOrigin() {
 		return origin;
@@ -33,19 +60,19 @@ public final class Trip {
 		this.destiny = destiny;
 	}
 	
-	public Float getCost() {
+	public Double getCost() {
 		return cost;
 	}
 	
-	public void setCost(Float cost) {
+	public void setCost(Double cost) {
 		this.cost = cost;
 	}
 	
-	public Integer getMaxPassengers() {
+	public int getMaxPassengers() {
 		return maxPassengers;
 	}
 	
-	public void setMaxPassengers(Integer maxPassengers) {
+	public void setMaxPassengers(int maxPassengers) {
 		this.maxPassengers = maxPassengers;
 	}
 	
@@ -57,19 +84,47 @@ public final class Trip {
 		this.dateTrip = dateTrip;
 	}
 
-	public Passenger[] getPassengers() {
+	public Collection<Passenger> getPassengers() {
 		return passengers;
 	}
 
-	public void setPassengers(Passenger[] passengers) {
+	public void setPassengers(Collection<Passenger> passengers) {
 		this.passengers = passengers;
 	}
 
-	public Score[] getScore() {
-		return score;
+	public Collection<Score> getScores() {
+		return scores;
 	}
 
-	public void setScore(Score[] score) {
-		this.score = score;
+	public void setScores(Collection<Score> scores) {
+		this.scores = scores;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Driver getDriver() {
+		return driver;
+	}
+
+	public void setDriver(Driver driver) {
+		this.driver = driver;
+	}
+	
+	public void addPassenger(Passenger passenger){
+		this.passengers.add(passenger);
+	}
+
+	public void addScore(Score score){
+		this.scores.add(score);
+	}
+	
+	public void finish() {
+		this.state = "F";
 	}
 }

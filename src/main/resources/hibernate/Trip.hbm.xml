@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="model">
     <class name="Trip">
-        <id name="id" type="long" column="idTrip" unsaved-value="0">
+        <id name="oid" type="long" column="idTrip" unsaved-value="0">
             <generator class="increment" />
         </id>
         <property name="origin"/>
@@ -11,11 +11,11 @@
         <property name="cost"/>
         <property name="maxPassengers"/>
         <property name="dateTrip"/>
-        <property name="states" />
-        <many-to-one name="driver" column="idUser" not-null="true" cascade="all"/>
+        <property name="state" />
+        <many-to-one name="driver" column="idDriver" not-null="true" cascade="all"/>
         <set name="passengers" table="passengers_trips" cascade="all" inverse="true">
             <key column="idTrip" />
-            <many-to-many column="idUser" class="Passenger" />
+            <many-to-many column="idPassenger" class="Passenger" />
         </set>
         <set name="scores" cascade="all">
             <key column="idTrip"/>

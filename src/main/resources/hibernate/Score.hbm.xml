@@ -3,12 +3,13 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="model">
     <class name="Score">
-        <id name="id" type="long" column="idScore" unsaved-value="0">
+        <id name="oid" type="long" column="idScore" unsaved-value="0">
             <generator class="increment" />
         </id>
         <property name="comment"/>
         <property name="score"/>
-        <many-to-one name="trip" column="idTrip" not-null="true" cascade="all"/>
+      <!--  <many-to-one name="trip" column="idTrip" not-null="true" cascade="all"/>
         <many-to-one name="passenger" column="idUser" not-null="true" cascade="all"/>
+     --> 
     </class>
 </hibernate-mapping>

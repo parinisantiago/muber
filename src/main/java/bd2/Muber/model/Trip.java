@@ -1,4 +1,4 @@
-package model;
+package bd2.Muber.model;
 
 import java.util.Date;
 import java.util.Collection;

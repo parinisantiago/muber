@@ -1,11 +1,17 @@
-package model;
-import java.util.Date;
-import java.util.Iterator;
+package bd2.Muber.model;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+
+import com.google.gson.Gson;
 
 public class Main {
 
@@ -22,17 +28,42 @@ public class Main {
 	private static Score scoreMargarita;
 	private static Session session;
 	private static Transaction tx;
-
-	public static void main(String[] args) {		
+	
+	public static void main(String[] args){		
 		try{
-			setUp();
+			/*setUp();
 			Long idRoberto = persist(roberto);
 			finishTrip(idRoberto);
 			setUpScore();
-			pay();
+			pay();*/
+			POJO pojo = new POJO();
+			Map<String, Object> aMap = new HashMap<String, Object>();
+			aMap.put("result", "OK");
+			aMap.put("pojo", pojo);
+			String json = new Gson().toJson(aMap);
+			System.out.println(json);
+			Session session = getSession();
+			Transaction tr = session.getTransaction();
+			tr.begin();
+			Query query = session.createQuery("FROM Passenger");
+			aMap.put("Passengers", query.list());
+			@SuppressWarnings("unused")
+			int in = 1;
+			tr.commit();
+			session.close();
+
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	protected static Session getSession() {
+		Configuration cfg = new Configuration();
+		cfg.configure("hibernate/hibernate.cfg.xml");
+		SessionFactory factory = cfg.buildSessionFactory();
+		Session session = factory.openSession();
+		return session;
 	}
 	
 	private static void pay() {

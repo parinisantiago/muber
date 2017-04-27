@@ -1,4 +1,4 @@
-package model;
+package bd2.Muber.model;
 
 public final class Score {
 	
@@ -44,15 +44,12 @@ public final class Score {
 	public Trip getTrip() {
 		return trip;
 	}
-
 	public void setTrip(Trip trip) {
 		this.trip = trip;
 	}
-
 	public Passenger getPassenger() {
 		return passenger;
 	}
-
 	public void setPassenger(Passenger passenger) {
 		this.passenger = passenger;
 	}*/

@@ -31,27 +31,11 @@ public class Main {
 	
 	public static void main(String[] args){		
 		try{
-			/*setUp();
+			setUp();
 			Long idRoberto = persist(roberto);
 			finishTrip(idRoberto);
 			setUpScore();
-			pay();*/
-			POJO pojo = new POJO();
-			Map<String, Object> aMap = new HashMap<String, Object>();
-			aMap.put("result", "OK");
-			aMap.put("pojo", pojo);
-			String json = new Gson().toJson(aMap);
-			System.out.println(json);
-			Session session = getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Query query = session.createQuery("FROM Passenger");
-			aMap.put("Passengers", query.list());
-			@SuppressWarnings("unused")
-			int in = 1;
-			tr.commit();
-			session.close();
-
+			pay();	
 		} catch (Exception e){
 			e.printStackTrace();
 		}

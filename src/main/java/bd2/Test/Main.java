@@ -1,4 +1,4 @@
-package bd2.Muber.model;
+package bd2.Test;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +12,12 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import com.google.gson.Gson;
+
+import bd2.Muber.model.Driver;
+import bd2.Muber.model.License;
+import bd2.Muber.model.Passenger;
+import bd2.Muber.model.Score;
+import bd2.Muber.model.Trip;
 
 public class Main {
 

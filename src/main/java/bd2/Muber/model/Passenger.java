@@ -54,6 +54,10 @@ public class Passenger extends User {
     	this.scores.add(score);
     }
 
+    public void addCash(double cash){
+    	this.cash = this.cash + cash;
+    }
+    
 	public void pay(double cost) {
 		this.cash = this.cash - cost;
 	}

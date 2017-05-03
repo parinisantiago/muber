@@ -3,6 +3,7 @@ package bd2.Muber.model;
 import java.util.Date;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public final class Trip {
 	
@@ -130,5 +131,15 @@ public final class Trip {
 	
 	public void finish() {
 		this.state = "F";
+	}
+
+	public int averageScore() {
+		Iterator<Score> scoreIterator = this.getScores().iterator();
+		int score = 0;
+		
+		while(scoreIterator.hasNext()){
+			score = score + scoreIterator.next().getScore();
+		}
+		return score;
 	}
 }

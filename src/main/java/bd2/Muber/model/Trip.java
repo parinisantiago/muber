@@ -124,6 +124,10 @@ public final class Trip {
 		this.scores.add(score);
 	}
 	
+	public boolean finished(){
+		return (this.state.equals("F"));
+	}
+	
 	public void finish() {
 		this.state = "F";
 	}

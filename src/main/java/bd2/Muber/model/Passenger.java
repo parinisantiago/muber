@@ -4,10 +4,13 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 
-public class Passenger extends User {
+import com.google.gson.annotations.Expose;
 
+public class Passenger extends User {
+	@Expose
 	private double cash;
 	private Collection<Trip> trips;
+	@Expose
     private Collection<Score> scores;
 
 	public Passenger() {

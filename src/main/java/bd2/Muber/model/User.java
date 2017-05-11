@@ -2,12 +2,18 @@ package bd2.Muber.model;
 
 import java.util.Date;
 
-public abstract class User {
+import com.google.gson.annotations.Expose;
 
-	protected String username;
-	protected String pass;
-	protected Date creationDate;
+public abstract class User {
+	
+	@Expose
 	protected Long oid;
+	@Expose
+	protected String username;
+	@Expose
+	protected String pass;
+	@Expose
+	protected Date creationDate;
 
 	public User() {
 		super();

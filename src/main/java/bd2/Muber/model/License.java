@@ -2,16 +2,20 @@ package bd2.Muber.model;
 
 import java.util.Date;
 
+import com.google.gson.annotations.Expose;
+
 public class License {
+	
+	@Expose
+	private int number;
+	@Expose
+	private Date expDate;
 	
 	public License(int number, Date expDate) {
 		super();
 		this.number = number;
 		this.expDate = expDate;
 	}
-
-	private int number;
-	private Date expDate;
 	
 	public License() {
 		super();

@@ -50,7 +50,7 @@ public class Main {
 	@SuppressWarnings("deprecation")
 	protected static Session getSession() {
 		Configuration cfg = new Configuration();
-		cfg.configure("hibernate/hibernate.cfg.xml");
+		cfg.configure("hibernate.cfg.xml");
 		SessionFactory factory = cfg.buildSessionFactory();
 		Session session = factory.openSession();
 		return session;
@@ -94,7 +94,7 @@ public class Main {
 
 	@SuppressWarnings("deprecation")
 	private static void setUp() {
-		cfg = new Configuration().configure("hibernate/hibernate.cfg.xml");
+		cfg = new Configuration().configure("hibernate.cfg.xml");
 		sf = cfg.buildSessionFactory();
 		
 		setUpLicense();

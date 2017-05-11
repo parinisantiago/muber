@@ -1,9 +1,13 @@
 package bd2.Muber.model;
 
+import com.google.gson.annotations.Expose;
+
 public final class Score {
-	
+	@Expose
 	private String comment;
+	@Expose
 	private Integer score;
+	@Expose
 	private Long oid;
 	
 	public Score() {

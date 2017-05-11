@@ -5,17 +5,27 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import com.google.gson.annotations.Expose;
+
 public final class Trip {
-	
+	@Expose
 	private String state;
+	@Expose
 	private String origin;
+	@Expose
 	private String destiny;
+	@Expose
 	private Double cost;
+	@Expose
 	private int maxPassengers;
+	@Expose
 	private Date dateTrip;
 	private Collection<Passenger> passengers;
+	@Expose
 	private Collection<Score> scores;
+	@Expose
 	private Driver driver;
+	@Expose
 	private Long oid;
 	
 	public Trip() {

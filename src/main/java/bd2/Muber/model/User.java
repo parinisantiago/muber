@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 public abstract class User {
 	
 	@Expose
-	protected Long oid;
+	protected long id;
 	@Expose
 	protected String username;
 	@Expose
@@ -26,12 +26,12 @@ public abstract class User {
 		this.creationDate = creationDate;
 	}
 
-	public Long getOid() {
-		return oid;
+	public Long getId() {
+		return id;
 	}
 	
-	public void setOid(Long oid) {
-		this.oid = oid;
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 

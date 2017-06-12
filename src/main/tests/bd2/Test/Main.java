@@ -1,20 +1,17 @@
 package bd2.Test;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.google.gson.Gson;
 
 import bd2.Muber.model.Driver;
 import bd2.Muber.model.License;
+import bd2.Muber.model.Muber;
 import bd2.Muber.model.Passenger;
 import bd2.Muber.model.Score;
 import bd2.Muber.model.Trip;
@@ -34,6 +31,7 @@ public class Main {
 	private static Score scoreMargarita;
 	private static Session session;
 	private static Transaction tx;
+	private static Muber muber;
 	
 	public static void main(String[] args){		
 		try{
@@ -42,12 +40,40 @@ public class Main {
 			finishTrip(idRoberto);
 			setUpScore();
 			pay();	
+			muber =new Muber();
+			persistMuber();
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
+	protected static void persistMuber(){
+		try{
+			session = sf.openSession();
+			tx = session.beginTransaction();
+			long id = 1;
+			roberto = (Driver)session.get(Driver.class, id);
+			id = 2;
+			margarita = (Passenger)session.get(Passenger.class, id);
+			id = 3;
+			german = (Passenger)session.get(Passenger.class, id);
+			id = 4;
+			alicia = (Passenger)session.get(Passenger.class, id);
+			id = 1;
+			tripRoberto = (Trip)session.get(Trip.class, id);
+			muber.addTrip(tripRoberto);
+			muber.addPassenger(margarita);
+			muber.addPassenger(german);
+			muber.addPassenger(alicia);
+			muber.addDriver(roberto);
+			session.persist(muber);
+			tx.commit();
+			session.close();
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	protected static Session getSession() {
 		Configuration cfg = new Configuration();
 		cfg.configure("hibernate.cfg.xml");
@@ -92,7 +118,6 @@ public class Main {
 		return id;
 	}
 
-	@SuppressWarnings("deprecation")
 	private static void setUp() {
 		cfg = new Configuration().configure("hibernate.cfg.xml");
 		sf = cfg.buildSessionFactory();
@@ -159,6 +184,14 @@ public class Main {
 
 	private static void setUpLicense() {
 		licenseRoberto = new License(786913,new Date());
+	}
+
+	public static Muber getMuber() {
+		return muber;
+	}
+
+	public static void setMuber(Muber muber) {
+		Main.muber = muber;
 	}
 
 }

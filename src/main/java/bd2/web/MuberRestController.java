@@ -1,7 +1,5 @@
 package bd2.web;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,10 +10,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -37,7 +33,6 @@ public class MuberRestController {
 	private Map<String, Object> aMap = new HashMap<String, Object>();
 	private String json;
 	
-	@SuppressWarnings("deprecation")
 	protected Session getSession() {
 		Configuration cfg = new Configuration();
 		cfg.configure();
@@ -62,7 +57,6 @@ public class MuberRestController {
 	
 	@RequestMapping(value = "/pasajeros", method = RequestMethod.GET, produces = "application/json", headers = "Accept=application/json")
 	public String pasajeros() {
-
 		try{
 			this.aMap = new HashMap<String, Object>();
 			Session session = this.getSession();
@@ -160,7 +154,7 @@ public class MuberRestController {
 		return this.json;
 	}
 	
-	@RequestMapping(value = "/viajes/agregarPasajero", method = RequestMethod.POST, produces = "application/json", headers = "Accept=application/json")
+	@RequestMapping(value = "/viajes/agregarPasajero", method = RequestMethod.PUT, produces = "application/json", headers = "Accept=application/json")
 	public String agregarPasajero(WebRequest request) {
 		try{
 			this.aMap = new HashMap<String, Object>();
@@ -172,17 +166,10 @@ public class MuberRestController {
 			viaje.addPassenger(pasajero);
 			pasajero.addTrip(viaje);
 			this.aMap.put("Result", "OK");
-			this.aMap.put("Viaje", viaje);
-			this.aMap.put("Pasajero", pasajero);
-			this.aMap.put("Pasajeros-viajes",viaje.getPassengers());
-			this.aMap.put("Pasajero", request.getParameter("pasajeroId"));
-			this.aMap.put("Viaje", request.getParameter("viajeId"));
 			this.json =  this.getGson().toJson(this.aMap);
 			tr.commit();
 			session.close();
 		} catch(Exception e){
-			this.aMap.put("Pasajero", request.getParameter("pasajeroId"));
-			this.aMap.put("Viaje", request.getParameter("viajeId"));
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -190,66 +177,89 @@ public class MuberRestController {
 	}
 	
 	@RequestMapping(value = "/viajes/calificar", method = RequestMethod.POST, produces = "application/json", headers = "Accept=application/json")
-	public String calificarViaje(long $idViaje, long $idPasajero, int $puntaje, String $comentario) {
+	public String calificarViaje(WebRequest request) {
 		try{
 			this.aMap = new HashMap<String, Object>();
 			Session session = this.getSession();
 			Transaction tr = session.getTransaction();
 			tr.begin();
-			Passenger pasajero = (Passenger) session.get(Passenger.class, $idPasajero);
-			Trip viaje = (Trip) session.get(Trip.class, $idViaje);
-			Score $score = new Score($comentario, $puntaje);
-			viaje.addScore($score);
-			pasajero.addScore($score);
-			aMap.put("Result", "OK");
-			this.json =  new Gson().toJson(aMap);
+			Passenger pasajero = (Passenger) session.get(Passenger.class,Long.parseLong(request.getParameter("pasajeroId")));
+			Trip viaje = (Trip) session.get(Trip.class, Long.parseLong(request.getParameter("viajeId")));
+			Score score = new Score(request.getParameter("comentario"), Integer.parseInt(request.getParameter("puntaje")));
+			viaje.addScore(score);
+			pasajero.addScore(score);
+			this.aMap.put("Result", "OK");
+			this.json =  this.getGson().toJson(this.aMap);
 			tr.commit();
 			session.close();
 		} catch(Exception e){
-			System.out.println(e.getMessage());
-			aMap.put("error", e.getMessage());
-			return this.json;
+			this.aMap.put("pasajeroId",request.getParameter("pasajeroId"));
+			this.aMap.put("viajeId",request.getParameter("viajeId"));
+			this.aMap.put("comentario",request.getParameter("comentario"));
+			this.aMap.put("puntaje",request.getParameter("puntaje"));
+			this.aMap.put("error", e.getMessage());
+			return this.getGson().toJson(this.aMap);
 		}
 		return this.json;
 	}
 	
 	@RequestMapping(value = "/pasajeros/cargarCredito", method = RequestMethod.PUT, produces = "application/json", headers = "Accept=application/json")
-	public String cargarCredito(long $idPasajero, Double $monto) {
+	public String cargarCredito(WebRequest request) {
 		try{
+			this.aMap = new HashMap<String, Object>();
 			Session session = this.getSession();
 			Transaction tr = session.getTransaction();
 			tr.begin();
-			Passenger pasajero = (Passenger) session.get(Passenger.class, $idPasajero);
-			pasajero.addCash($monto);
-			aMap.put("Result", "OK");
-			this.json =  new Gson().toJson(aMap);
+			Passenger pasajero = (Passenger) session.get(Passenger.class, Long.parseLong(request.getParameter("pasajeroId")));
+			pasajero.addCash(Double.parseDouble(request.getParameter("monto")));
+			this.aMap.put("Result", "OK");
+			this.json =  this.getGson().toJson(this.aMap);
 			tr.commit();
 			session.close();
 		} catch(Exception e){
-			System.out.println(e.getMessage());
-			aMap.put("error", e.getMessage());
-			return this.json;
+			this.aMap.put("error", e.getMessage());
+			return this.getGson().toJson(this.aMap);
 		}
 		return this.json;
 	}
 	
 	@RequestMapping(value = "/viajes/finalizar", method = RequestMethod.PUT, produces = "application/json", headers = "Accept=application/json")
-	public String finalizarViaje(long $idViaje) {
+	public String finalizarViaje(WebRequest request) {
 		try{
+			this.aMap = new HashMap<String, Object>();
 			Session session = this.getSession();
 			Transaction tr = session.getTransaction();
 			tr.begin();
-			Trip viaje = (Trip) session.get(Trip.class, $idViaje);
+			Trip viaje = (Trip) session.get(Trip.class,Long.parseLong(request.getParameter("viajeId")));
 			if(viaje.finished()) throw new Exception("El viaje ya a sido finalizado");
 			viaje.finish();
 			aMap.put("Result", "OK");
-			this.json =  new Gson().toJson(aMap);
+			this.json =  this.getGson().toJson(this.aMap);
 			tr.commit();
 			session.close();
 		} catch(Exception e){
-			System.out.println(e.getMessage());
-			aMap.put("error", e.getMessage());
-			return this.json;
+			this.aMap.put("error", e.getMessage());
+			return this.getGson().toJson(this.aMap);
+		}
+		return this.json;
+	}
+	@RequestMapping(value = "/conductores/top10", method = RequestMethod.GET, produces = "application/json", headers = "Accept=application/json")
+	public String top10Conductores() {
+		try{
+			this.aMap = new HashMap<String, Object>();
+			Session session = this.getSession();
+			Transaction tr = session.getTransaction();
+			tr.begin();
+			Query query = session.createQuery("SELECT D FROM Driver D, Trip T WHERE T.state = 'F' ORDER BY D.averageScore");
+			query.setMaxResults(10);
+			this.aMap.put("Result", "OK");
+			this.aMap.put("Top 10", query.list());
+			this.json =  this.getGson().toJson(this.aMap);
+			tr.commit();
+			session.close();
+		} catch(Exception e){
+			this.aMap.put("error", e.getMessage());
+			return this.getGson().toJson(this.aMap);
 		}
 		return this.json;
 	}

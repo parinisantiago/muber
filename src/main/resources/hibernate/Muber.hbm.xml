@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="bd2.Muber.model">
+	<class name="Muber">
+		<id name="id" type="long" column="idMuber" unsaved-value="0">
+            <generator class="increment" />
+        </id>
+        <set name="trips" cascade="all">
+            <key column="idMuber"/>
+            <one-to-many class="Trip"/>
+        </set>
+        <set name="passengers" cascade="all">
+            <key column="idMuber"/>
+            <one-to-many class="Passenger"/>
+        </set>       
+        <set name="drivers" cascade="all">
+            <key column="idMuber"/>
+            <one-to-many class="Driver"/>
+        </set>
+	</class>
+</hibernate-mapping>

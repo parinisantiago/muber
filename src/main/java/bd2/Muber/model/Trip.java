@@ -26,7 +26,7 @@ public final class Trip {
 	@Expose
 	private Driver driver;
 	@Expose
-	private Long oid;
+	private long id;
 	
 	public Trip() {
 		super();
@@ -46,12 +46,12 @@ public final class Trip {
 	}
 
 	
-	public Long getOid() {
-		return oid;
+	public long getId() {
+		return id;
 	}
 	
-	public void setOid(Long oid) {
-		this.oid = oid;
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	
@@ -133,6 +133,7 @@ public final class Trip {
 
 	public void addScore(Score score){
 		this.scores.add(score);
+		this.driver.updatesScore();
 	}
 	
 	public boolean finished(){
@@ -141,6 +142,12 @@ public final class Trip {
 	
 	public void finish() {
 		this.state = "F";
+		Iterator<Passenger> passengersIterator = this.getPassengers().iterator();
+		double total = this.getCost() / this.getPassengers().size();
+		while(passengersIterator.hasNext()){
+			passengersIterator.next().pay(total);
+		}
+		
 	}
 
 	public int averageScore() {
@@ -150,6 +157,7 @@ public final class Trip {
 		while(scoreIterator.hasNext()){
 			score = score + scoreIterator.next().getScore();
 		}
+		score = score / this.getScores().size();
 		return score;
 	}
 }

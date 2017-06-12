@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="bd2.Muber.model">
     <class name="User">
-        <id name="oid" type="long" column="idUser" unsaved-value="0">
+        <id name="id" type="long" column="idUser" unsaved-value="0">
             <generator class="increment" />
         </id>
         <discriminator column="userType" type="string"/>
@@ -11,6 +11,7 @@
         <property name="pass" />
         <property name="creationDate" />
         <subclass name="Driver" discriminator-value="D">
+        	<property name="averageScore" />
             <component name="license" class="License">
                 <property name="number"/>
                 <property name="expDate"/>

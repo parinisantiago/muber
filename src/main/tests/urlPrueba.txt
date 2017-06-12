@@ -1,0 +1,11 @@
+a.
+http://localhost:8080/MuberRESTful/rest/services/viajes/nuevo?origen=Cordoba&destino=Mar del Plata&conductorId=1&costoTotal=3500&cantidadPasajeros=2
+b.
+http://localhost:8080/MuberRESTful/rest/services/pasajeros/cargarCredito?pasajeroId=4&monto=4000
+http://localhost:8080/MuberRESTful/rest/services/viajes/agregarPasajero?pasajeroId=4&viajeId=2
+http://localhost:8080/MuberRESTful/rest/services/viajes/agregarPasajero?pasajeroId=3&viajeId=2
+c.
+http://localhost:8080/MuberRESTful/rest/services/viajes/calificar?viajeId=2&pasajeroId=3&puntaje=5&comentario=buen viaje
+http://localhost:8080/MuberRESTful/rest/services/viajes/calificar?viajeId=2&pasajeroId=4&puntaje=4&comentario=conductor amabale
+d.
+http://localhost:8080/MuberRESTful/rest/services/viajes/finalizar?viajeId=2

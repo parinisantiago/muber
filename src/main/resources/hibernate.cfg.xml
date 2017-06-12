@@ -11,7 +11,7 @@
 			com.mysql.jdbc.Driver
 		</property>
 
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/grupoNN</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/grupo31</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">root</property>
 		<property name="hibernate.current_session_context_class">thread</property>
@@ -21,9 +21,11 @@
 
 		<!-- Incluir mappings aquí -->
 		<!-- <mapping resource="hibernate/clase.hbm.xml" /> -->
+		<!-- <property name="hibernate.hbm2ddl.auto">create</property>  --> 
 		<mapping resource="hibernate/User.hbm.xml"/>
 		<mapping resource="hibernate/Trip.hbm.xml"/>
 		<mapping resource="hibernate/Score.hbm.xml"/>
+		<mapping resource="hibernate/Muber.hbm.xml"/>
 
 	</session-factory>
 </hibernate-configuration>

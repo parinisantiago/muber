@@ -8,7 +8,7 @@ public final class Score {
 	@Expose
 	private Integer score;
 	@Expose
-	private Long oid;
+	private long id;
 	
 	public Score() {
 		super();
@@ -20,12 +20,12 @@ public final class Score {
 		this.score = score;
 	}
 	
-	public Long getOid() {
-		return oid;
+	public Long getId() {
+		return id;
 	}
 	
-	public void setOid(Long oid) {
-		this.oid = oid;
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

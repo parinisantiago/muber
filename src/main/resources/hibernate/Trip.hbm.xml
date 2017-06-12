@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="bd2.Muber.model">
     <class name="Trip">
-        <id name="oid" type="long" column="idTrip" unsaved-value="0">
+        <id name="id" type="long" column="idTrip" unsaved-value="0">
             <generator class="increment" />
         </id>
         <property name="origin"/>

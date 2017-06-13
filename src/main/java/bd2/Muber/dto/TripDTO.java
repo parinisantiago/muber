@@ -2,6 +2,7 @@ package bd2.Muber.dto;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import bd2.Muber.model.Driver;
@@ -21,6 +22,7 @@ public class TripDTO {
 	private long id;
 	
 	public TripDTO(Trip trip){
+    	this.scores = new HashSet<ScoreDTO>();
 		this.state = trip.getState();
 		this.origin = trip.getOrigin();
 		this.destiny = trip.getDestiny();

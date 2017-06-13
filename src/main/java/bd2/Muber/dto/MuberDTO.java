@@ -1,6 +1,7 @@
 package bd2.Muber.dto;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import bd2.Muber.model.Driver;
 import bd2.Muber.model.Muber;
@@ -15,7 +16,10 @@ public class MuberDTO {
 	private Collection<TripDTO> trips;
 	
 	public MuberDTO(Muber muber){
-		
+		this.drivers = new HashSet<DriverDTO>();
+		this.passengers = new HashSet<PassengerDTO>();
+		this.trips = new HashSet<TripDTO>();
+
 		Iterator<Driver> driverI = muber.getDrivers().iterator();
 		while(driverI.hasNext()){
 			drivers.add(new DriverDTO(driverI.next()));

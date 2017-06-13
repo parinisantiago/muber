@@ -2,6 +2,7 @@ package bd2.Muber.dto;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import bd2.Muber.model.Passenger;
@@ -17,11 +18,13 @@ public class PassengerDTO {
     private Collection<ScoreDTO> scores;
     
     public PassengerDTO(Passenger passenger){
+    	this.scores = new HashSet<ScoreDTO>();
     	this.id = passenger.getId();
     	this.cash = passenger.getCash();
     	this.creationDate = passenger.getCreationDate();
     	this.username = passenger.getUsername();
     	this.pass = passenger.getPass();
+    	this.scores = new HashSet<ScoreDTO>();
 		Iterator<Score> scoreIterator = passenger.getScores().iterator();
 		while(scoreIterator.hasNext()){
 			scores.add(new ScoreDTO(scoreIterator.next()));

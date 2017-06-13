@@ -9,6 +9,19 @@ import bd2.Muber.model.Trip;
 
 public class DTOFactory {
 
+	private static DTOFactory instance = null;	
+	
+	protected DTOFactory(){
+		
+	}
+	
+	public static DTOFactory getInstance(){
+		if (instance == null) {
+			instance = new DTOFactory();
+		}
+		return instance;
+	}
+	
 	public DriverDTO getDriverDTO(Driver driver) {
 		return new DriverDTO(driver);
 	}

@@ -23,6 +23,7 @@ import bd2.Muber.model.Driver;
 import bd2.Muber.model.Passenger;
 import bd2.Muber.model.Score;
 import bd2.Muber.model.Trip;
+import bd2.Muber.services.ServiceLocator;
 
 @ControllerAdvice
 @RequestMapping("/services")
@@ -59,16 +60,8 @@ public class MuberRestController {
 	public String pasajeros() {
 		try{
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Query query = session.createQuery("FROM Passenger");
-			this.aMap.put("Passengers", query.list());
-			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
-			
-			
+			this.aMap.put("Passengers", ServiceLocator.getInstance().getPasajerosService().getPasajeros());
+			this.json =  this.getGson().toJson(this.aMap);	
 		} catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);

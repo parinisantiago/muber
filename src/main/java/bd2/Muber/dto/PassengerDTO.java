@@ -5,16 +5,23 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import com.google.gson.annotations.Expose;
+
 import bd2.Muber.model.Passenger;
 import bd2.Muber.model.Score;
 
 public class PassengerDTO {
-	
+	@Expose
 	private long id;
+	@Expose
 	private String username;
+	@Expose
 	private String pass;
+	@Expose
 	private Date creationDate;
+	@Expose
 	private double cash;
+	@Expose
     private Collection<ScoreDTO> scores;
     
     public PassengerDTO(Passenger passenger){

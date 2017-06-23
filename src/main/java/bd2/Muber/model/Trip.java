@@ -145,13 +145,14 @@ public final class Trip {
 	}
 	
 	public void finish() {
-		this.state = "F";
-		Iterator<Passenger> passengersIterator = this.getPassengers().iterator();
-		double total = this.getCost() / this.getPassengers().size();
-		while(passengersIterator.hasNext()){
-			passengersIterator.next().pay(total);
+		if(!this.finished()){
+			this.state = "F";
+			Iterator<Passenger> passengersIterator = this.getPassengers().iterator();
+			double total = this.getCost() / this.getPassengers().size();
+			while(passengersIterator.hasNext()){
+				passengersIterator.next().pay(total);
+			}
 		}
-		
 	}
 
 	public int averageScore() {

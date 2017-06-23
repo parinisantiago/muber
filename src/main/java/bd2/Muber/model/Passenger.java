@@ -12,6 +12,7 @@ public class Passenger extends User {
 	private Collection<Trip> trips;
 	@Expose
     private Collection<Score> scores;
+	private long idTrip;
 
 	public Passenger() {
 		super();
@@ -63,5 +64,13 @@ public class Passenger extends User {
     
 	public void pay(double cost) {
 		this.cash = this.cash - cost;
+	}
+
+	public long getIdTrip() {
+		return idTrip;
+	}
+
+	public void setIdTrip(long idTrip) {
+		this.idTrip = idTrip;
 	}
 }

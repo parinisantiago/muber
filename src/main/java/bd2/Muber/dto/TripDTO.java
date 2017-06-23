@@ -5,20 +5,29 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import bd2.Muber.model.Driver;
+import com.google.gson.annotations.Expose;
+
 import bd2.Muber.model.Score;
 import bd2.Muber.model.Trip;
 
 public class TripDTO {
-	
+	@Expose
 	private String state;
+	@Expose
 	private String origin;
+	@Expose
 	private String destiny;
+	@Expose
 	private Double cost;
+	@Expose
 	private int maxPassengers;
+	@Expose
 	private Date dateTrip;
+	@Expose
 	private Collection<ScoreDTO> scores;
-	private Driver driver;
+	@Expose
+	private DriverDTO driver;
+	@Expose
 	private long id;
 	
 	public TripDTO(Trip trip){
@@ -30,6 +39,7 @@ public class TripDTO {
 		this.maxPassengers = trip.getMaxPassengers();
 		this.dateTrip = trip.getDateTrip();
 		this.id = trip.getId();
+		this.driver = new DriverDTO(trip.getDriver());
 		Iterator<Score> scoreIterator = trip.getScores().iterator();
 		while(scoreIterator.hasNext()){
 			scores.add(new ScoreDTO(scoreIterator.next()));
@@ -100,11 +110,11 @@ public class TripDTO {
 		this.id = id;
 	}
 	
-	public Driver getDriver() {
+	public DriverDTO getDriver() {
 		return driver;
 	}
 	
-	public void setDriver(Driver driver) {
+	public void setDriver(DriverDTO driver) {
 		this.driver = driver;
 	}
 	

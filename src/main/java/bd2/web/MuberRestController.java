@@ -1,8 +1,10 @@
 package bd2.web;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -10,8 +12,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -19,6 +23,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import bd2.Muber.dto.DriverDTO;
+import bd2.Muber.dto.TripDTO;
 import bd2.Muber.model.Driver;
 import bd2.Muber.model.Passenger;
 import bd2.Muber.model.Score;
@@ -52,7 +58,7 @@ public class MuberRestController {
 	@RequestMapping(value = "/example", method = RequestMethod.GET, produces = "application/json", headers = "Accept=application/json")
 	public String prueba() {
 		Map<String, Object> aMap = new HashMap<String, Object>();
-		aMap.put("result", "OK");
+		aMap.put("result", "funciona");
 		return new Gson().toJson(aMap);
 	}
 	
@@ -73,14 +79,8 @@ public class MuberRestController {
 	public String conductores() {
 		try{
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Query query = session.createQuery("FROM Driver");
-			this.aMap.put("Drivers", query.list());
-			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
+			this.aMap.put("Drivers", ServiceLocator.getInstance().getConductoresService().getConductores());
+			this.json =  this.getGson().toJson(this.aMap);	
 		} catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
@@ -92,14 +92,13 @@ public class MuberRestController {
 	public String viajesAbiertos() {
 		try{
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Query query = session.createQuery("FROM Trip T WHERE T.state = 'O' ");
-			this.aMap.put("viajesAbiertos", query.list());
-			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
+			Collection<TripDTO> trips =ServiceLocator.getInstance().getViajesService().viajesAbiertos();
+			if(trips.isEmpty()){
+				this.aMap.put("Trips:", "no hay viajes abiertos");
+			}else{
+			this.aMap.put("Trips:", ServiceLocator.getInstance().getViajesService().viajesAbiertos());
+			}
+			this.json =  this.getGson().toJson(this.aMap);	
 		} catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
@@ -108,39 +107,43 @@ public class MuberRestController {
 	}
 	
 	@RequestMapping(value = "/conductores/detalle", method = RequestMethod.GET, produces = "application/json", headers = "Accept=application/json")
-	public String conductorDetalle(WebRequest request) {
+	public String conductorDetalle(@RequestParam("id") String id) {
 		try{
+			DriverDTO driver = ServiceLocator.getInstance().getConductoresService().conductorDetalle(id);
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Query query = session.createQuery("FROM Driver D WHERE D.id ="+request.getParameter("id"));
-			this.aMap.put("conductorDetalle", query.list());
+			if(driver == null){
+				this.aMap.put("Drivers", "no hay un condyctor");
+			} else {
+			this.aMap.put("Drivers", driver);
+			}
 			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
-		} catch(Exception e){
-			this.aMap.put("error", e.getMessage());
+		}catch(NoSuchElementException e){
+			this.aMap.put("error","no existe el conductor solicitado");
+			return this.getGson().toJson(this.aMap);
+		}
+		catch(Exception e){
+			this.aMap.put("error",e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
 		return this.json;
 	}
 	
 	@RequestMapping(value = "/viajes/nuevo", method = RequestMethod.POST, produces = "application/json", headers = "Accept=application/json")
-	public String viajesNuevo(WebRequest request) {
+	public String viajesNuevo(@RequestBody Trip trip) {
 		try{
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Driver conductor = (Driver) session.get(Driver.class, Long.parseLong(request.getParameter("conductorId")));
-			Trip viaje = new Trip(request.getParameter("origen"), request.getParameter("destino"), Double.parseDouble(request.getParameter("costoTotal")), Integer.parseInt(request.getParameter("cantidadPasajeros")), new Date(), conductor);
-			session.persist(viaje);
-			this.aMap.put("Result", "OK");
-			this.json =  new Gson().toJson(aMap);
-			tr.commit();
-			session.close();
-		} catch(Exception e){
+			this.aMap.put("Trip", ServiceLocator.getInstance().getViajesService().viajesNuevo(trip));
+			this.json =  this.getGson().toJson(this.aMap);	
+		} 
+		catch(NoSuchElementException e){
+			this.aMap.put("error", "El conductor no existe");
+			return this.getGson().toJson(this.aMap);
+		}	
+		catch(NullPointerException e){
+			this.aMap.put("error", "El conductor ya posee un viaje abierto");
+			return this.getGson().toJson(this.aMap);
+		}
+		catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -148,21 +151,21 @@ public class MuberRestController {
 	}
 	
 	@RequestMapping(value = "/viajes/agregarPasajero", method = RequestMethod.PUT, produces = "application/json", headers = "Accept=application/json")
-	public String agregarPasajero(WebRequest request) {
+	public String agregarPasajero(@RequestBody Passenger passenger) {
 		try{
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Passenger pasajero = (Passenger) session.get(Passenger.class, Long.parseLong(request.getParameter("pasajeroId")));
-			Trip viaje = (Trip) session.get(Trip.class, Long.parseLong(request.getParameter("viajeId")));
-			viaje.addPassenger(pasajero);
-			pasajero.addTrip(viaje);
-			this.aMap.put("Result", "OK");
-			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
-		} catch(Exception e){
+			this.aMap.put("Pasajero", ServiceLocator.getInstance().getViajesService().agregarPasajero(passenger));
+			this.json =  this.getGson().toJson(this.aMap);	
+		} 
+		catch(NoSuchElementException e){
+			this.aMap.put("error", "El pasajero o viaje no existe");
+			return this.getGson().toJson(this.aMap);
+		}	
+		catch(NullPointerException e){
+			this.aMap.put("error", "No pueden agregarse más pasajeros a este viaje o el viaje ya ha finalizado");
+			return this.getGson().toJson(this.aMap);
+		}
+		catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -170,46 +173,39 @@ public class MuberRestController {
 	}
 	
 	@RequestMapping(value = "/viajes/calificar", method = RequestMethod.POST, produces = "application/json", headers = "Accept=application/json")
-	public String calificarViaje(WebRequest request) {
-		try{
+	public String calificarViaje(@RequestBody Score score) {
+		try{	
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Passenger pasajero = (Passenger) session.get(Passenger.class,Long.parseLong(request.getParameter("pasajeroId")));
-			Trip viaje = (Trip) session.get(Trip.class, Long.parseLong(request.getParameter("viajeId")));
-			Score score = new Score(request.getParameter("comentario"), Integer.parseInt(request.getParameter("puntaje")));
-			viaje.addScore(score);
-			pasajero.addScore(score);
-			this.aMap.put("Result", "OK");
-			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
-		} catch(Exception e){
-			this.aMap.put("pasajeroId",request.getParameter("pasajeroId"));
-			this.aMap.put("viajeId",request.getParameter("viajeId"));
-			this.aMap.put("comentario",request.getParameter("comentario"));
-			this.aMap.put("puntaje",request.getParameter("puntaje"));
+			this.aMap.put("Calificacion:", ServiceLocator.getInstance().getViajesService().calificarViaje(score));
+			this.json =  this.getGson().toJson(this.aMap);	
+		} 
+		catch(NoSuchElementException e){
+			this.aMap.put("error", "No existe el pasajero o el viaje");
+			return this.getGson().toJson(this.aMap);
+		}	
+		catch(NullPointerException e){
+			this.aMap.put("error", "El pasajero ya ha puntuado este viaje o este aun no ha finalizado");
+			return this.getGson().toJson(this.aMap);
+		}catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
+		
 		return this.json;
 	}
 	
 	@RequestMapping(value = "/pasajeros/cargarCredito", method = RequestMethod.PUT, produces = "application/json", headers = "Accept=application/json")
-	public String cargarCredito(WebRequest request) {
+	public String cargarCredito(@RequestBody Passenger passenger) {
 		try{
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Passenger pasajero = (Passenger) session.get(Passenger.class, Long.parseLong(request.getParameter("pasajeroId")));
-			pasajero.addCash(Double.parseDouble(request.getParameter("monto")));
-			this.aMap.put("Result", "OK");
+			this.aMap.put("Passenger:", ServiceLocator.getInstance().getPasajerosService().cargarCredito(passenger));
 			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
-		} catch(Exception e){
+		} 
+		catch(NoSuchElementException e){
+			this.aMap.put("error", "No existe el pasajero");
+			return this.getGson().toJson(this.aMap);
+		}	
+		catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -217,20 +213,22 @@ public class MuberRestController {
 	}
 	
 	@RequestMapping(value = "/viajes/finalizar", method = RequestMethod.PUT, produces = "application/json", headers = "Accept=application/json")
-	public String finalizarViaje(WebRequest request) {
+	public String finalizarViaje(@RequestBody Trip trip) {
 		try{
+			
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Trip viaje = (Trip) session.get(Trip.class,Long.parseLong(request.getParameter("viajeId")));
-			if(viaje.finished()) throw new Exception("El viaje ya a sido finalizado");
-			viaje.finish();
-			aMap.put("Result", "OK");
+			this.aMap.put("Trip:", ServiceLocator.getInstance().getViajesService().finalizarViaje(trip));
 			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
-		} catch(Exception e){
+			
+		} 	catch(NoSuchElementException e){
+			this.aMap.put("error", "No existe el viaje");
+			return this.getGson().toJson(this.aMap);
+		}	
+			catch(NullPointerException e){
+			this.aMap.put("error", "El viaje ya a sido finalizado");
+			return this.getGson().toJson(this.aMap);
+		}
+			catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -240,16 +238,8 @@ public class MuberRestController {
 	public String top10Conductores() {
 		try{
 			this.aMap = new HashMap<String, Object>();
-			Session session = this.getSession();
-			Transaction tr = session.getTransaction();
-			tr.begin();
-			Query query = session.createQuery("SELECT D FROM Driver D, Trip T WHERE T.state = 'F' ORDER BY D.averageScore");
-			query.setMaxResults(10);
-			this.aMap.put("Result", "OK");
-			this.aMap.put("Top 10", query.list());
+			this.aMap.put("Drivers:", ServiceLocator.getInstance().getConductoresService().top10Conductores());
 			this.json =  this.getGson().toJson(this.aMap);
-			tr.commit();
-			session.close();
 		} catch(Exception e){
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);

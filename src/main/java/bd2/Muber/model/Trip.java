@@ -27,7 +27,7 @@ public final class Trip {
 	private Driver driver;
 	@Expose
 	private long id;
-	
+
 	public Trip() {
 		super();
 	}
@@ -140,6 +140,10 @@ public final class Trip {
 		return (this.state.equals("F"));
 	}
 	
+	public boolean tripIsFull(){
+		return(this.passengers.size() == this.maxPassengers);
+	}
+	
 	public void finish() {
 		this.state = "F";
 		Iterator<Passenger> passengersIterator = this.getPassengers().iterator();
@@ -157,7 +161,8 @@ public final class Trip {
 		while(scoreIterator.hasNext()){
 			score = score + scoreIterator.next().getScore();
 		}
-		score = score / this.getScores().size();
+		if(this.getScores().size() != 0)score = score / this.getScores().size();
 		return score;
 	}
+
 }

@@ -1,15 +1,23 @@
 package bd2.Muber.dto;
 
 import java.util.Date;
+
+import com.google.gson.annotations.Expose;
+
 import bd2.Muber.model.Driver;
 
 public class DriverDTO {
-
+	@Expose
 	protected long id;
+	@Expose
 	protected String username;
+	@Expose
 	protected String pass;
+	@Expose
 	protected Date creationDate;
+	@Expose
 	private LicenseDTO license;
+	@Expose
 	private double averageScore;
 	
 	public DriverDTO(Driver driver){

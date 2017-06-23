@@ -8,14 +8,14 @@ import bd2.Muber.repositories.bi.PasajerosRepositoryBI;
 
 public class HibernatePasajerosRepository extends BaseHibernateRepository implements PasajerosRepositoryBI{
 	public  Muber getPasajeros(){
-		Query query = this.sessionFactory.getCurrentSession().createQuery("FROM Muber");
+		Query query = this.getSession().createQuery("FROM Muber");
 		Muber muber = (Muber) query.list().iterator().next();
 		return muber;
 	}
 
 	@Override
 	public Passenger cargarCredito(Passenger passenger) {
-		Passenger myPassenger = (Passenger) this.sessionFactory.getCurrentSession().createQuery("FROM Passenger P WHERE id="+passenger.getId()).list().iterator().next();
+		Passenger myPassenger = (Passenger) this.getSession().createQuery("FROM Passenger P WHERE id="+passenger.getId()).list().iterator().next();
 		myPassenger.addCash(passenger.getCash());
 		return myPassenger;
 	}

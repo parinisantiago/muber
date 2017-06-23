@@ -3,6 +3,9 @@ package bd2.Muber.dto;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+
+import com.google.gson.annotations.Expose;
+
 import bd2.Muber.model.Driver;
 import bd2.Muber.model.Muber;
 import bd2.Muber.model.Passenger;
@@ -10,9 +13,11 @@ import bd2.Muber.model.Trip;
 
 
 public class MuberDTO {
-	
+	@Expose
 	private Collection<DriverDTO> drivers;
+	@Expose
 	private Collection<PassengerDTO> passengers;
+	@Expose
 	private Collection<TripDTO> trips;
 	
 	public MuberDTO(Muber muber){

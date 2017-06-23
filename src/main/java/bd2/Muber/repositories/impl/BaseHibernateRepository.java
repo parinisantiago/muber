@@ -2,7 +2,6 @@ package bd2.Muber.repositories.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 
 import bd2.Muber.repositories.bi.BaseRepositoryBI;
 

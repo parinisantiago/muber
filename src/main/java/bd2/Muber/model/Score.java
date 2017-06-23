@@ -9,6 +9,8 @@ public final class Score {
 	private Integer score;
 	@Expose
 	private long id;
+	private long idTrip;
+	private long idPassenger;
 	
 	public Score() {
 		super();
@@ -57,4 +59,20 @@ public final class Score {
 	public void setPassenger(Passenger passenger) {
 		this.passenger = passenger;
 	}*/
+
+	public long getIdTrip() {
+		return idTrip;
+	}
+
+	public void setIdTrip(long idTrip) {
+		this.idTrip = idTrip;
+	}
+
+	public long getIdPassenger() {
+		return idPassenger;
+	}
+
+	public void setIdPassenger(long idPassenger) {
+		this.idPassenger = idPassenger;
+	}
 }

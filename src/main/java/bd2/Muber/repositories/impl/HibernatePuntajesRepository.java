@@ -12,11 +12,11 @@ public class HibernatePuntajesRepository extends BaseHibernateRepository impleme
 	@Override
 	public Score calificarViaje(Score score) {
 		@SuppressWarnings("unchecked")
-		Collection<Score> scores = this.sessionFactory.getCurrentSession().createQuery("FROM Score S, Trip T, Passenger P WHERE T.id="+score.getIdTrip()+" AND P.id="+score.getIdPassenger()).list();
+		Collection<Score> scores = this.getSession().createQuery("FROM Score S, Trip T, Passenger P WHERE T.id="+score.getIdTrip()+" AND P.id="+score.getIdPassenger()).list();
 		if(!scores.isEmpty()) return null;
 		Score myScore= new Score(score.getComment(),score.getScore());
-		Trip trip = (Trip) this.sessionFactory.getCurrentSession().createQuery("FROM Trip T WHERE T.id="+score.getIdTrip()).list().iterator().next();
-		Passenger passenger=(Passenger) this.sessionFactory.getCurrentSession().createQuery("FROM Passenger P WHERE P.id="+score.getIdPassenger()).list().iterator().next();
+		Trip trip = (Trip) this.getSession().createQuery("FROM Trip T WHERE T.id="+score.getIdTrip()).list().iterator().next();
+		Passenger passenger=(Passenger) this.getSession().createQuery("FROM Passenger P WHERE P.id="+score.getIdPassenger()).list().iterator().next();
 		trip.addScore(myScore);
 		passenger.addScore(myScore);
 		return myScore;

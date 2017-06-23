@@ -1,11 +1,15 @@
 package bd2.Muber.dto;
 
+import com.google.gson.annotations.Expose;
+
 import bd2.Muber.model.Score;
 
 public class ScoreDTO {
-	
+	@Expose
 	private String comment;
+	@Expose
 	private Integer score;
+	@Expose
 	private long id;
 	
 	public ScoreDTO(Score score){

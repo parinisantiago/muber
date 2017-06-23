@@ -1,11 +1,15 @@
 package bd2.Muber.dto;
 
 import java.util.Date;
+
+import com.google.gson.annotations.Expose;
+
 import bd2.Muber.model.License;
 
 public class LicenseDTO {
-	
+	@Expose
 	private int number;
+	@Expose
 	private Date expDate;
 	
 	public LicenseDTO(License license){

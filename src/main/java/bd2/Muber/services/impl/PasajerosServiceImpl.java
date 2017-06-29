@@ -30,4 +30,13 @@ public class PasajerosServiceImpl extends BaseServiceImpl implements PasajerosSe
 
 	    return passengetDTO;
 	}
+
+	@Override
+	public PassengerDTO nuevo(Passenger pasajero) {
+		PasajerosRepositoryBI pasajerosRepo = this.getPasajerosRepository();
+
+		PassengerDTO passengetDTO = this.getDtoFactory().getPassengerDTO(pasajerosRepo.nuevo(pasajero));
+
+	    return passengetDTO;
+	}
 }

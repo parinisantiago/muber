@@ -9,4 +9,6 @@ public interface PasajerosRepositoryBI extends BaseRepositoryBI{
 	public Muber getPasajeros();
 
 	public Passenger cargarCredito(Passenger passenger);
+
+	public Passenger nuevo(Passenger pasajero);
 }

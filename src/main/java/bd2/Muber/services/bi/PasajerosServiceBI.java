@@ -9,4 +9,6 @@ public interface PasajerosServiceBI {
 	public Collection<PassengerDTO> getPasajeros();
 
 	public PassengerDTO cargarCredito(Passenger passenger);
+
+	public PassengerDTO nuevo(Passenger pasajero);
 }

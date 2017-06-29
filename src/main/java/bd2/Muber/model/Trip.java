@@ -128,7 +128,10 @@ public final class Trip {
 	}
 	
 	public void addPassenger(Passenger passenger){
-		if(!(this.finished() && this.tripIsFull())) this.passengers.add(passenger);
+		if(!(this.finished() && this.tripIsFull())){ 
+			this.passengers.add(passenger);
+			passenger.addTrip(this);
+		}
 	}
 
 	public void addScore(Score score){

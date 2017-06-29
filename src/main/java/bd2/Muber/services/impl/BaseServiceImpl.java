@@ -10,10 +10,10 @@ import bd2.Muber.repositories.bi.ViajesRepositoryBI;
 public class BaseServiceImpl {
 	
 	private DTOFactory dtoFactory;
-	private PasajerosRepositoryBI pasajerosRepository = null;
-	private ConductoresRepositoryBI conductoresRepository = null;
-	private ViajesRepositoryBI viajesRepository = null;
-	private PuntajesRepositoryBI puntajesRepository = null;
+	private PasajerosRepositoryBI pasajerosRepository;
+	private ConductoresRepositoryBI conductoresRepository;
+	private ViajesRepositoryBI viajesRepository;
+	private PuntajesRepositoryBI puntajesRepository;
 	
 	@SuppressWarnings("static-access")
 	public DTOFactory getDtoFactory(){
@@ -25,9 +25,6 @@ public class BaseServiceImpl {
 	}
 	
 	public PasajerosRepositoryBI getPasajerosRepository() {
-		if(pasajerosRepository == null){
-			pasajerosRepository = RepositoryLocator.getInstance().getPasajerosRepository();
-		}
 		return pasajerosRepository;
 	}
 
@@ -36,9 +33,6 @@ public class BaseServiceImpl {
 	}
 
 	public ConductoresRepositoryBI getConductoresRepository() {
-		if(conductoresRepository == null){
-			conductoresRepository = RepositoryLocator.getInstance().getConductoresRepository();
-		}
 		return conductoresRepository;
 	}
 
@@ -47,9 +41,6 @@ public class BaseServiceImpl {
 	}
 
 	public ViajesRepositoryBI getViajesRepository() {
-		if(viajesRepository == null){
-			viajesRepository = RepositoryLocator.getInstance().getViajesRepository();
-		}
 		return viajesRepository;	
 		}
 
@@ -58,9 +49,6 @@ public class BaseServiceImpl {
 	}
 
 	public PuntajesRepositoryBI getPuntajesRepository() {
-		if(puntajesRepository == null){
-			puntajesRepository = RepositoryLocator.getInstance().getPuntajesRepository();
-		}
 		return puntajesRepository;		}
 
 	public void setPuntajesRepository(PuntajesRepositoryBI puntajesRepository) {

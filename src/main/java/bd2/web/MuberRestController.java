@@ -69,6 +69,7 @@ public class MuberRestController {
 			this.aMap.put("Passengers", ServiceLocator.getInstance().getPasajerosService().getPasajeros());
 			this.json =  this.getGson().toJson(this.aMap);	
 		} catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -82,6 +83,7 @@ public class MuberRestController {
 			this.aMap.put("Drivers", ServiceLocator.getInstance().getConductoresService().getConductores());
 			this.json =  this.getGson().toJson(this.aMap);	
 		} catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -100,6 +102,7 @@ public class MuberRestController {
 			}
 			this.json =  this.getGson().toJson(this.aMap);	
 		} catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -114,14 +117,16 @@ public class MuberRestController {
 			if(driver == null){
 				this.aMap.put("Drivers", "no hay un condyctor");
 			} else {
-			this.aMap.put("Drivers", driver);
+				this.aMap.put("Drivers", driver);
 			}
 			this.json =  this.getGson().toJson(this.aMap);
 		}catch(NoSuchElementException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error","no existe el conductor solicitado");
 			return this.getGson().toJson(this.aMap);
 		}
 		catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error",e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -136,14 +141,17 @@ public class MuberRestController {
 			this.json =  this.getGson().toJson(this.aMap);	
 		} 
 		catch(NoSuchElementException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "El conductor no existe");
 			return this.getGson().toJson(this.aMap);
 		}	
 		catch(NullPointerException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "El conductor ya posee un viaje abierto");
 			return this.getGson().toJson(this.aMap);
 		}
 		catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -158,14 +166,17 @@ public class MuberRestController {
 			this.json =  this.getGson().toJson(this.aMap);	
 		} 
 		catch(NoSuchElementException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "El pasajero o viaje no existe");
 			return this.getGson().toJson(this.aMap);
 		}	
 		catch(NullPointerException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "No pueden agregarse más pasajeros a este viaje o el viaje ya ha finalizado");
 			return this.getGson().toJson(this.aMap);
 		}
 		catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -180,13 +191,16 @@ public class MuberRestController {
 			this.json =  this.getGson().toJson(this.aMap);	
 		} 
 		catch(NoSuchElementException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "No existe el pasajero o el viaje");
 			return this.getGson().toJson(this.aMap);
 		}	
 		catch(NullPointerException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "El pasajero ya ha puntuado este viaje o este aun no ha finalizado");
 			return this.getGson().toJson(this.aMap);
 		}catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -202,10 +216,12 @@ public class MuberRestController {
 			this.json =  this.getGson().toJson(this.aMap);
 		} 
 		catch(NoSuchElementException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "No existe el pasajero");
 			return this.getGson().toJson(this.aMap);
 		}	
 		catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -220,15 +236,19 @@ public class MuberRestController {
 			this.aMap.put("Trip:", ServiceLocator.getInstance().getViajesService().finalizarViaje(trip));
 			this.json =  this.getGson().toJson(this.aMap);
 			
-		} 	catch(NoSuchElementException e){
+		}
+		catch(NoSuchElementException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "No existe el viaje");
 			return this.getGson().toJson(this.aMap);
-		}	
-			catch(NullPointerException e){
+		}
+		catch(NullPointerException e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", "El viaje ya a sido finalizado");
 			return this.getGson().toJson(this.aMap);
 		}
-			catch(Exception e){
+		catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
@@ -240,10 +260,28 @@ public class MuberRestController {
 			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("Drivers:", ServiceLocator.getInstance().getConductoresService().top10Conductores());
 			this.json =  this.getGson().toJson(this.aMap);
-		} catch(Exception e){
+		} 
+		catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
 			this.aMap.put("error", e.getMessage());
 			return this.getGson().toJson(this.aMap);
 		}
 		return this.json;
 	}
+	@RequestMapping(value = "/pasajero", method = RequestMethod.POST, produces = "application/json", headers = "Accept=application/json")
+	public String crearPasajero(@RequestBody Passenger pasajero) {
+		try{
+			this.aMap = new HashMap<String, Object>();
+			this.aMap.put("Pasajero:", ServiceLocator.getInstance().getPasajerosService().nuevo(pasajero));
+			this.json =  this.getGson().toJson(this.aMap);
+		} 
+		catch(Exception e){
+			this.aMap = new HashMap<String, Object>();
+			this.aMap.put("error", e.getMessage());
+			return this.getGson().toJson(this.aMap);
+		}
+		return this.json;
+	}
+	
+	
 }

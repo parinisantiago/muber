@@ -43,7 +43,6 @@ public class HibernateViajesRepository extends BaseHibernateRepository implement
 		if(trip.finished()) return null;
 		Passenger myPassanger = (Passenger) this.sessionFactory.getCurrentSession().createQuery("FROM Passenger P WHERE P.id="+passenger.getId()).list().iterator().next();
 		trip.addPassenger(myPassanger);
-		myPassanger.addTrip(trip);
 		return myPassanger;
 	}
 
